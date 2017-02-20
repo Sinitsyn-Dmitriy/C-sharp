@@ -1,0 +1,83 @@
+﻿@{
+    var book = "";
+    var chapter = "";
+    var verse = "";
+    var note = "";
+    var scrId = "";
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            scrId = Request.QueryString["ID"];
+            var db = Database.Open("MyScriptureJournal");
+            var dbCommand = "SELECT * FROM Scripture WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, scrId);
+            if (row != null)
+            {
+                book = row.Book;
+                chapter = row.Chapter;
+                verse = row.Verse;
+                note = row.Note;
+            }
+            else
+            {
+                Validation.AddFormError("No Scripture was found for that ID.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No Scripture was found for that ID.");
+        }
+    }
+
+    if (IsPost && !Request["buttonDelete"].IsEmpty())
+    {
+        scrId = Request.Form["scrId"];
+        var db = Database.Open("MyScriptureJournal");
+        var deleteCommand = "DELETE FROM Scripture WHERE ID = @0";
+        db.Execute(deleteCommand, scrId);
+        Response.Redirect("~/Scripture");
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete a Scripture</title>
+</head>
+<body>
+    <h1>Delete a Scripture</h1>
+    @Html.ValidationSummary()
+    <p><a href="~/Scripture">Return to Scripture listing</a></p>
+
+    <form method="post">
+        <fieldset>
+            <legend>Scripture Information</legend>
+
+            <p>
+                <span>Book:</span>
+                <span>@book</span>
+            </p>
+
+            <p>
+                <span>Chapter:</span>
+                <span>@chapter</span>
+            </p>
+
+            <p>
+                <span>Verse:</span>
+                <span>@verse</span>
+            </p>
+
+            <p>
+                <span>Note:</span>
+                <span>@note</span>
+            </p>
+
+            <input type="hidden" name="scrId" value="@scrId" />
+            <p><input type="submit" name="buttonDelete" value="Delete Scripture" /></p>
+        </fieldset>
+        <p><a href="~/Scripture">Return to Scripture listing</a></p>
+    </form>
+</body>
+</html>

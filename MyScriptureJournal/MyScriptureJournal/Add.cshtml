@@ -1,0 +1,83 @@
+﻿@{
+
+    Validation.RequireField("book", "You must enter a book");
+    Validation.RequireField("chapter", "Chapter is required");
+    Validation.RequireField("verse", "You haven't entered a verse");
+    Validation.RequireField("note", "You haven't entered a note");
+
+    var book = "";
+    var chapter = "";
+    var verse = "";
+    var note = "";
+
+    if (IsPost && Validation.IsValid())
+    {
+        book = Request.Form["book"];
+        chapter = Request.Form["chapter"];
+        verse = Request.Form["verse"];
+        note = Request.Form["note"];
+
+        var database = Database.Open("MyScriptureJournal");
+        var insertCommand = "INSERT INTO Scripture (book, chapter, verse, note, date) Values(@0, @1, @2, @3, @4)";
+        database.Execute(insertCommand, book, chapter, verse, note, DateTime.Now);
+
+        Response.Redirect("~/Scripture");
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add new Scripture</title>
+    <style type="text/css">
+        .field-validation-error {
+            font-weight: bold;
+            color: red;
+            background-color: yellow;
+        }
+
+        .validation-summary-errors {
+            border: 2px dashed red;
+            color: red;
+            background-color: yellow;
+            font-weight: bold;
+            margin: 12px;
+        }
+    </style>
+</head>
+<body style="background-color: darkslategray;">
+    <h1>Add new Scripture</h1>
+    @Html.ValidationSummary()
+    <form method="post">
+        <fieldset>
+            <legend>Scripture Information</legend>
+            <p>
+                <label for="book">Book:</label>
+                <input type="text" name="book" value="@Request.Form["book"]" />
+                @Html.ValidationMessage("book")
+            </p>
+
+            <p>
+                <label for="chapter">Chapter:</label>
+                <input type="text" name="chapter" value="@Request.Form["chapter"]" />
+                @Html.ValidationMessage("chapter")
+            </p>
+
+            <p>
+                <label for="verse">Verse:</label>
+                <input type="text" name="verse" value="@Request.Form["verse"]" />
+                @Html.ValidationMessage("verse")
+            </p>
+
+            <p>
+                <label for="note">Note:</label>
+                <input type="text" name="note" value="@Request.Form["note"]" />
+                @Html.ValidationMessage("note")
+            </p>
+
+            <p><input type="submit" name="buttonSubmit" value="Add Scripture" /></p>
+        </fieldset>
+    </form>
+</body>
+</html>
