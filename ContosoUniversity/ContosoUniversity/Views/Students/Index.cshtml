@@ -1,16 +1,11 @@
 @model PaginatedList<ContosoUniversity.Models.Student>
-
-
 @{
     ViewData["Title"] = "Index";
 }
-
 <h2>Index</h2>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -20,7 +15,6 @@
         </p>
     </div>
 </form>
-
 <table class="table">
     <thead>
         <tr>
@@ -58,13 +52,10 @@
         }
     </tbody>
 </table>
-
-
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-page="@(Model.PageIndex - 1)"
@@ -79,6 +70,3 @@
    class="btn btn-default @nextDisabled btn">
     Next
 </a>
-
-
-

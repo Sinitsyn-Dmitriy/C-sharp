@@ -46,7 +46,6 @@ namespace ContosoUniversity.Migrations
                 onDelete: ReferentialAction.Cascade);
         }
 
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
@@ -132,6 +131,3 @@ namespace ContosoUniversity.Migrations
         }
     }
 }
-
-
-

@@ -40,6 +40,7 @@ namespace ContosoUniversity.Controllers
             }
 
             ViewData["CurrentFilter"] = searchString;
+
             var students = from s in _context.Students
                            select s;
             if (!String.IsNullOrEmpty(searchString))
@@ -47,7 +48,6 @@ namespace ContosoUniversity.Controllers
                 students = students.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstMidName.Contains(searchString));
             }
-
             switch (sortOrder)
             {
                 case "name_desc":
@@ -81,6 +81,7 @@ namespace ContosoUniversity.Controllers
                     .ThenInclude(e => e.Course)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
+
             if (student == null)
             {
                 return NotFound();
@@ -96,12 +97,12 @@ namespace ContosoUniversity.Controllers
         }
 
         // POST: Students/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-    [Bind("EnrollmentDate,FirstMidName,LastName")] Student student)
+            [Bind("EnrollmentDate,FirstMidName,LastName")] Student student)
         {
             try
             {
@@ -139,7 +140,7 @@ namespace ContosoUniversity.Controllers
         }
 
         // POST: Students/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
@@ -229,6 +230,3 @@ namespace ContosoUniversity.Controllers
         }
     }
 }
-
-
-

@@ -26,15 +26,15 @@ namespace ContosoUniversity.Data
                     EnrollmentDate = DateTime.Parse("2012-09-01") },
                 new Student { FirstMidName = "Arturo",   LastName = "Anand",
                     EnrollmentDate = DateTime.Parse("2013-09-01") },
-                new Student { FirstMidName = "Gytis",   LastName = "Barzdukas",
+                new Student { FirstMidName = "Gytis",    LastName = "Barzdukas",
                     EnrollmentDate = DateTime.Parse("2012-09-01") },
-                new Student { FirstMidName = "Yan",     LastName = "Li",
+                new Student { FirstMidName = "Yan",      LastName = "Li",
                     EnrollmentDate = DateTime.Parse("2012-09-01") },
-                new Student { FirstMidName = "Peggy",   LastName = "Justice",
+                new Student { FirstMidName = "Peggy",    LastName = "Justice",
                     EnrollmentDate = DateTime.Parse("2011-09-01") },
-                new Student { FirstMidName = "Laura",   LastName = "Norman",
+                new Student { FirstMidName = "Laura",    LastName = "Norman",
                     EnrollmentDate = DateTime.Parse("2013-09-01") },
-                new Student { FirstMidName = "Nino",    LastName = "Olivetto",
+                new Student { FirstMidName = "Nino",     LastName = "Olivetto",
                     EnrollmentDate = DateTime.Parse("2005-09-01") }
             };
 
@@ -46,9 +46,9 @@ namespace ContosoUniversity.Data
 
             var instructors = new Instructor[]
             {
-                new Instructor { FirstMidName = "Kim",  LastName = "Abercrombie",
+                new Instructor { FirstMidName = "Kim",     LastName = "Abercrombie",
                     HireDate = DateTime.Parse("1995-03-11") },
-                new Instructor { FirstMidName = "Fadi", LastName = "Fakhouri",
+                new Instructor { FirstMidName = "Fadi",    LastName = "Fakhouri",
                     HireDate = DateTime.Parse("2002-07-06") },
                 new Instructor { FirstMidName = "Roger",   LastName = "Harui",
                     HireDate = DateTime.Parse("1998-07-01") },
@@ -66,7 +66,7 @@ namespace ContosoUniversity.Data
 
             var departments = new Department[]
             {
-                new Department { Name = "English",  Budget = 350000,
+                new Department { Name = "English",     Budget = 350000,
                     StartDate = DateTime.Parse("2007-09-01"),
                     InstructorID  = instructors.Single( i => i.LastName == "Abercrombie").ID },
                 new Department { Name = "Mathematics", Budget = 100000,
@@ -88,7 +88,7 @@ namespace ContosoUniversity.Data
 
             var courses = new Course[]
             {
-                new Course {CourseID = 1050, Title = "Chemistry",   Credits = 3,
+                new Course {CourseID = 1050, Title = "Chemistry",      Credits = 3,
                     DepartmentID = departments.Single( s => s.Name == "Engineering").DepartmentID
                 },
                 new Course {CourseID = 4022, Title = "Microeconomics", Credits = 3,
@@ -97,16 +97,16 @@ namespace ContosoUniversity.Data
                 new Course {CourseID = 4041, Title = "Macroeconomics", Credits = 3,
                     DepartmentID = departments.Single( s => s.Name == "Economics").DepartmentID
                 },
-                new Course {CourseID = 1045, Title = "Calculus",    Credits = 4,
+                new Course {CourseID = 1045, Title = "Calculus",       Credits = 4,
                     DepartmentID = departments.Single( s => s.Name == "Mathematics").DepartmentID
                 },
                 new Course {CourseID = 3141, Title = "Trigonometry",   Credits = 4,
                     DepartmentID = departments.Single( s => s.Name == "Mathematics").DepartmentID
                 },
-                new Course {CourseID = 2021, Title = "Composition", Credits = 3,
+                new Course {CourseID = 2021, Title = "Composition",    Credits = 3,
                     DepartmentID = departments.Single( s => s.Name == "English").DepartmentID
                 },
-                new Course {CourseID = 2042, Title = "Literature",  Credits = 4,
+                new Course {CourseID = 2042, Title = "Literature",     Credits = 4,
                     DepartmentID = departments.Single( s => s.Name == "English").DepartmentID
                 },
             };
@@ -251,6 +251,3 @@ namespace ContosoUniversity.Data
         }
     }
 }
-
-
-

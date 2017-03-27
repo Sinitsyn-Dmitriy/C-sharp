@@ -9,7 +9,8 @@ using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using ContosoUniversity.Models.SchoolViewModels;
 
-namespace ContosoUniversity
+
+namespace ContosoUniversity.Controllers
 {
     public class InstructorsController : Controller
     {
@@ -28,12 +29,7 @@ namespace ContosoUniversity
                   .Include(i => i.OfficeAssignment)
                   .Include(i => i.CourseAssignments)
                     .ThenInclude(i => i.Course)
-                        .ThenInclude(i => i.Enrollments)
-                            .ThenInclude(i => i.Student)
-                  .Include(i => i.CourseAssignments)
-                    .ThenInclude(i => i.Course)
                         .ThenInclude(i => i.Department)
-                  .AsNoTracking()
                   .OrderBy(i => i.LastName)
                   .ToListAsync();
 
@@ -48,13 +44,17 @@ namespace ContosoUniversity
             if (courseID != null)
             {
                 ViewData["CourseID"] = courseID.Value;
-                viewModel.Enrollments = viewModel.Courses.Where(
-                    x => x.CourseID == courseID).Single().Enrollments;
+                var selectedCourse = viewModel.Courses.Where(x => x.CourseID == courseID).Single();
+                _context.Entry(selectedCourse).Collection(x => x.Enrollments).Load();
+                foreach (Enrollment enrollment in selectedCourse.Enrollments)
+                {
+                    _context.Entry(enrollment).Reference(x => x.Student).Load();
+                }
+                viewModel.Enrollments = selectedCourse.Enrollments;
             }
 
             return View(viewModel);
         }
-
 
         // GET: Instructors/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -74,7 +74,6 @@ namespace ContosoUniversity
             return View(instructor);
         }
 
-        // GET: Instructors/Create
         public IActionResult Create()
         {
             var instructor = new Instructor();
@@ -84,8 +83,6 @@ namespace ContosoUniversity
         }
 
         // POST: Instructors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstMidName,HireDate,LastName,OfficeAssignment")] Instructor instructor, string[] selectedCourses)
@@ -146,9 +143,8 @@ namespace ContosoUniversity
             ViewData["Courses"] = viewModel;
         }
 
-
         // POST: Instructors/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -223,8 +219,6 @@ namespace ContosoUniversity
             }
         }
 
-
-
         // GET: Instructors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -269,6 +263,3 @@ namespace ContosoUniversity
         }
     }
 }
-
-
-

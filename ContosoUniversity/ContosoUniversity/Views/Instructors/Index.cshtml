@@ -1,11 +1,8 @@
 @model ContosoUniversity.Models.SchoolViewModels.InstructorIndexData
-
 @{
     ViewData["Title"] = "Instructors";
 }
-
 <h2>Instructors</h2>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -49,7 +46,7 @@
                         foreach (var course in item.CourseAssignments)
                         {
                             @course.Course.CourseID @:  @course.Course.Title <br />
-                    	}
+                        }
                     }
                 </td>
                 <td>
@@ -63,7 +60,6 @@
     </tbody>
 </table>
 
-
 @if (Model.Courses != null)
 {
     <h3>Courses Taught by Selected Instructor</h3>
@@ -74,7 +70,6 @@
             <th>Title</th>
             <th>Department</th>
         </tr>
-
         @foreach (var item in Model.Courses)
         {
             string selectedRow = "";
@@ -95,12 +90,10 @@
                 <td>
                     @item.Department.Name
                 </td>
-            </tr>    }
-
+            </tr>
+        }
     </table>
 }
-
-
 @if (Model.Enrollments != null)
 {
     <h3>
@@ -120,10 +113,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Grade)
                 </td>
-            </tr>    }
+            </tr>
+        }
     </table>
 }
-
-
-
-
