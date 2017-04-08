@@ -8,7 +8,7 @@ using TodolistApp.Models;
 namespace TodolistApp.Migrations
 {
     [DbContext(typeof(TodolistAppContext))]
-    [Migration("20170407004441_Initial")]
+    [Migration("20170407031521_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,8 @@ namespace TodolistApp.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Category");
 
                     b.Property<DateTime>("Date");
 

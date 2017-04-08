@@ -4,11 +4,10 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<br />
+<h5>Delete Item</h5>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Todolistitem</h4>
     <hr />
     <dl class="dl-horizontal">
         <input type="hidden" asp-for="ID" />
@@ -17,6 +16,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Date)

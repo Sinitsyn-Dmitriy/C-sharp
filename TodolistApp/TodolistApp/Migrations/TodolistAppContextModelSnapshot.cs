@@ -21,6 +21,8 @@ namespace TodolistApp.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Category");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("Status");

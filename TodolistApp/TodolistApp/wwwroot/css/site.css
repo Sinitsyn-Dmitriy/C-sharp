@@ -1,6 +1,30 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #1b1b1b;
+    color: #fff;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+p {
+    color: #f3734e;
+    font-weight: 700;
+}
+
+a:hover {
+    color: #f3734e;
+    text-decoration: none;
+}
+
+th {
+    color: #f3734e;
+}
+.create_link{
+    margin-top: 5%;
 }
 
 /* Wrapping element */
@@ -17,6 +41,17 @@ textarea {
     max-width: 280px;
 }
 
+
+    select{
+        width: 260px;
+        padding: 4px 0;
+    }
+
+.btn-default:hover {
+    background-color: #f3734e;
+    color: #1b1b1b;
+}
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
@@ -28,15 +63,24 @@ textarea {
     width: 100%;
 }
 
-h3{
+h4{
     text-align: center;
-    color: #fff;
+    color: #1b1b1b;
+    padding: 10px 0;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+h4:hover{
+    color:#fff;
 }
+
+.navbar-inverse {
+    background-color: #f3734e;
+    border-color: #f3734e;
+
+    /* Hide/rearrange for smaller screens */
+    @media screen and (max-width: 767px) {
+        /* Hide captions */
+        .carousel-caption {
+            display: none;
+        }
+    }

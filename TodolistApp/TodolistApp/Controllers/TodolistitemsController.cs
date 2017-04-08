@@ -18,11 +18,64 @@ namespace TodolistApp.Controllers
             _context = context;    
         }
 
-        // GET: Todolistitems
-        public async Task<IActionResult> Index()
+        /*  // GET: Todolistitems
+          public async Task<IActionResult> Index(string searchString)
+          {
+              var todolist = from m in _context.Todolistitem
+                             select m;
+
+              if (!String.IsNullOrEmpty(searchString))
+              {
+                  todolist = todolist.Where(s => s.Title.Contains(searchString));
+              }
+
+              return View(await todolist.ToListAsync());
+          }
+
+      */
+
+
+        // Requires using Microsoft.AspNetCore.Mvc.Rendering;
+        public async Task<IActionResult> Index(string todolistCategory, string searchString)
         {
-            return View(await _context.Todolistitem.ToListAsync());
+
+            // Use LINQ to get list of categories.
+            IQueryable<string> categoryQuery = from m in _context.Todolistitem
+                                               orderby m.Category
+                                               select m.Category;
+
+            var todolist = from m in _context.Todolistitem
+                           select m;
+
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                todolist = todolist.Where(s => s.Title.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(todolistCategory))
+            {
+                todolist = todolist.Where(x => x.Category == todolistCategory);
+            }
+
+            var todolistCategoryVM = new TodolistCategoryViewModel();
+            todolistCategoryVM.categories = new SelectList(await categoryQuery.Distinct().ToListAsync());
+            todolistCategoryVM.todolist = await todolist.ToListAsync();
+
+            return View(todolistCategoryVM);
+
         }
+
+
+
+
+        [HttpPost]
+        public string Index(string searchString, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
+        }
+
 
         // GET: Todolistitems/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -53,7 +106,7 @@ namespace TodolistApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,Date,Status,TimeTaken")] Todolistitem todolistitem)
+        public async Task<IActionResult> Create([Bind("ID,Title,Category,Date,Status,TimeTaken")] Todolistitem todolistitem)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +138,7 @@ namespace TodolistApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Date,Status,TimeTaken")] Todolistitem todolistitem)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Category,Date,Status,TimeTaken")] Todolistitem todolistitem)
         {
             if (id != todolistitem.ID)
             {
